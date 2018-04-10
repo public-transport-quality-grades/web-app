@@ -1,3 +1,9 @@
+# Public Transport Quality Grades Web App
+
+[![Build Status](https://travis-ci.org/public-transport-quality-grades/web-app.svg?branch=master)](https://travis-ci.org/public-transport-quality-grades/web-app)
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
