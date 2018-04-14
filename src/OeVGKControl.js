@@ -2,14 +2,20 @@
 import React, {Component} from 'react';
 import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
 import MapboxMap from './MapboxMap';
+import RatingInfoPanel from './RatingInfoPanel';
 import './OeVGKControl.css';
 
-type Option = {
+type DayOption = {
     text: string,
     value: string
 };
 
-type Rating = {
+type TimeOption = {
+    text: string,
+    value: number
+};
+
+export type Rating = {
     id: number,
     day: Date,
     typeOfDay: string,
@@ -23,11 +29,11 @@ type Rating = {
 type State = {
     oevgk18Enabled: boolean,
     oevgk93Enabled: boolean,
-    dayOptions: Option[],
-    timeOptions: Option[],
+    dayOptions: DayOption[],
+    timeOptions: TimeOption[],
     availableRatings: Rating[],
     selectedDay: string,
-    selectedRatingId: string,
+    selectedRatingId: number,
     mapData: {}
 };
 
@@ -40,7 +46,7 @@ class OevGKControl extends Component<{}, State> {
         timeOptions: [],
         availableRatings: [],
         selectedDay: "",
-        selectedRatingId: "",
+        selectedRatingId: -1,
         mapData: {}
     };
 
@@ -58,10 +64,12 @@ class OevGKControl extends Component<{}, State> {
         return fetch('/api/availableDays')
             .then(this.getJsonResponse)
             .then((data: any) => {
+                // TODO fix date parsing
+
                 // TODO error handling
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
-                let newDayOptions = data.days.map((day): Option => {
+                let newDayOptions = data.days.map((day): DayOption => {
                     return {text: day, value: day};
                 });
                 let defaultSelection = newDayOptions[0].value;
@@ -75,25 +83,25 @@ class OevGKControl extends Component<{}, State> {
             .then(this.getJsonResponse)
             .then((data: Rating[]) => {
                 // TODO error handling
-                let newTimeOptions: Option[] = data.map((rating: Rating): Option => {
+                let newTimeOptions: TimeOption[] = data.map((rating: Rating): TimeOption => {
                     return {
                         text: rating.timeInterval.timeDescription,
-                        value: rating.id.toString()
+                        value: rating.id
                     };
                 });
-                let newSelectedRatingId: string = this.state.timeOptions === newTimeOptions ?
+                let newSelectedRatingId: number = this.state.timeOptions === newTimeOptions ?
                     this.state.selectedRatingId : newTimeOptions[0].value;
 
                 this.setState({
                     availableRatings: data,
                     timeOptions: newTimeOptions,
-                    selectedRatingId: newSelectedRatingId
+                    selectedRatingId: newSelectedRatingId,
                 });
 
             })
     };
 
-    updateMapData = (ratingId: string) => {
+    updateMapData = (ratingId: number) => {
         fetch(`/api/rating/${ratingId}`)
             .then(this.getJsonResponse)
             .then((data: {}) => {
@@ -115,7 +123,7 @@ class OevGKControl extends Component<{}, State> {
         this.setState({selectedDay: value});
     };
 
-    handleTimeSelect = (event: SyntheticMouseEvent<Select>, selectProps: { value: string }) => {
+    handleTimeSelect = (event: SyntheticMouseEvent<Select>, selectProps: { value: number }) => {
         let {value} = selectProps;
         this.setState({selectedRatingId: value});
     };
@@ -125,7 +133,10 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oevgk18Enabled, oevgk93Enabled} = this.state
+        const {oevgk18Enabled, oevgk93Enabled, availableRatings, selectedRatingId} = this.state;
+        const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
+        const selectedRating = availableRatings[selectedRatingIndex];
+
         return (
             <div>
                 <Accordion styled id="control">
@@ -146,10 +157,14 @@ class OevGKControl extends Component<{}, State> {
                                     onChange={this.handleDaySelect}/>
                             <Select fluid
                                     placeholder='Zeitbereich auswählen'
-                                    value={this.state.selectedRatingId}
+                                    value={selectedRatingId}
                                     options={this.state.timeOptions}
                                     onChange={this.handleTimeSelect}/>
                         </div>
+                        {selectedRating &&
+                            /*<RatingInfoPanel rating={availableRatings[parseInt(selectedRatingId, 10)]} />*/
+                            <RatingInfoPanel rating={selectedRating} />
+                        }
                     </Accordion.Content>
 
                     <Accordion.Title active={oevgk93Enabled} onClick={this.handleOeVGK93Toggle}>

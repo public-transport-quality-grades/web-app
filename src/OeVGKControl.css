@@ -1,14 +1,14 @@
 #control {
-  background: white;
-  position: absolute;
-  width: 250pt;
-  z-index: 1000;
-  left: 20px;
-  top: 100px;
-  padding: 5pt 5pt;
-  box-shadow: 4px 4px 5px 2px rgba(0,0,0,0.22);
+    background: white;
+    position: absolute;
+    width: 250pt;
+    z-index: 1000;
+    left: 20px;
+    top: 100px;
+    padding: 5pt 5pt;
+    box-shadow: 4px 4px 5px 2px rgba(0, 0, 0, 0.22);
 }
 
 div.dropdowns > * {
-  margin-bottom: 10pt;
+    margin-bottom: 10pt;
 }
