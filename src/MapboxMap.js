@@ -42,8 +42,10 @@ export default class MapboxMap extends React.Component<Props, State> {
                 <GeoJSONLayer data={this.props.data}
                               fillPaint={{
                                   "fill-color": ["get", "fill"],
-                                  "fill-opacity": ["get", "fill-opacity"]
+                                  "fill-opacity": ["get", "fill-opacity"],
+                                  "fill-outline-color": ["get", "stroke"]
                               }}/>
+                }}
                 }
             </Map>
         );

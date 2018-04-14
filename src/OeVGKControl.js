@@ -131,14 +131,14 @@ class OevGKControl extends Component<{}, State> {
                 <Accordion styled id="control">
                     <Accordion.Title active={oevgk18Enabled} onClick={this.handleOeVGK18Toggle}>
                         <Icon name='dropdown'/>
-                        <Checkbox toggle defaultChecked={true}
+                        <Checkbox toggle
                                   checked={oevgk18Enabled}
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen 2018"
                                   onClick={this.handleOeVGK18Toggle}/>
                     </Accordion.Title>
                     <Accordion.Content active={oevgk18Enabled}>
-                        <div>
+                        <div className="dropdowns">
                             <Select fluid
                                     placeholder='Tag auswählen'
                                     value={this.state.selectedDay}
