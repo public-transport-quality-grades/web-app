@@ -11,7 +11,8 @@ const Map = ReactMapboxGl({
 type Coordinate = number[]
 
 type Props = {
-    data: {}
+    data: {},
+    showLayer: boolean
 }
 
 type State = {
@@ -23,7 +24,7 @@ export default class MapboxMap extends React.Component<Props, State> {
 
     state = {
         center: [8.81669, 47.22382],
-        zoom: [17]
+        zoom: [9]
     };
 
 
@@ -37,11 +38,11 @@ export default class MapboxMap extends React.Component<Props, State> {
                     height: "100vh",
                     width: "100vw"
                 }}>
-
+                {this.props.showLayer &&
                 <GeoJSONLayer data={this.props.data}
                               fillPaint={{
-                                  "fill-color": ["get", "color"],
-                                  "fill-opacity": 0.65
+                                  "fill-color": ["get", "fill"],
+                                  "fill-opacity": ["get", "fill-opacity"]
                               }}/>
                 }
             </Map>
