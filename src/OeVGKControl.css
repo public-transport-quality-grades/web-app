@@ -1,6 +1,7 @@
 #control {
   background: white;
   position: absolute;
+  width: 250pt;
   z-index: 1000;
   left: 20px;
   top: 100px;

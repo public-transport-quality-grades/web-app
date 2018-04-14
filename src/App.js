@@ -4,10 +4,6 @@ import OeVGKControl from './OeVGKControl'
 import './App.css';
 
 class App extends Component<{}> {
-    // handleShowLayerChange = (event) => {
-    //     this.setState({showLayer: event.target.checked});
-    // };
-
     render() {
         return (
             <div>
