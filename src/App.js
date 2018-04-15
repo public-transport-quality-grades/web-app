@@ -1,6 +1,6 @@
 //@flow
 import React, { Component } from 'react';
-import OeVGKControl from './OeVGKControl'
+import OeVGKControl from './components/OeVGKControl'
 import './App.css';
 
 class App extends Component<{}> {

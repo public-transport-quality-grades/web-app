@@ -64,8 +64,6 @@ class OevGKControl extends Component<{}, State> {
         return fetch('/api/availableDays')
             .then(this.getJsonResponse)
             .then((data: any) => {
-                // TODO fix date parsing
-
                 // TODO error handling
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
@@ -83,7 +81,14 @@ class OevGKControl extends Component<{}, State> {
             .then(this.getJsonResponse)
             .then((data: Rating[]) => {
                 // TODO error handling
-                let newTimeOptions: TimeOption[] = data.map((rating: Rating): TimeOption => {
+
+                // correctly parse day as date
+                const ratings: Rating[] = data.map((rating: Rating): Rating => {
+                    rating.day = new Date(rating.day);
+                    return rating;
+                });
+
+                let newTimeOptions: TimeOption[] = ratings.map((rating: Rating): TimeOption => {
                     return {
                         text: rating.timeInterval.timeDescription,
                         value: rating.id
@@ -93,7 +98,7 @@ class OevGKControl extends Component<{}, State> {
                     this.state.selectedRatingId : newTimeOptions[0].value;
 
                 this.setState({
-                    availableRatings: data,
+                    availableRatings: ratings,
                     timeOptions: newTimeOptions,
                     selectedRatingId: newSelectedRatingId,
                 });

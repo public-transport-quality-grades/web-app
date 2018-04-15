@@ -9,8 +9,7 @@ type Props = {
 class RatingInfoPanel extends Component<Props> {
 
     formatDate = (date: Date): string => {
-        // TODO: Enable when date parsing is fixed
-      return `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
+      return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
     };
 
     render(){
@@ -23,12 +22,12 @@ class RatingInfoPanel extends Component<Props> {
                   <List.Item>
                       <List.Content>
                           <List.Header>Stichtag</List.Header>
-                          <List.Description>{typeOfDay}, {day}</List.Description>
+                          <List.Description>{typeOfDay}, {this.formatDate(day)}</List.Description>
                       </List.Content>
                   </List.Item>
                   <List.Item>
                       <List.Content>
-                          <List.Header>Tageszeit</List.Header>
+                          <List.Header>Zeitintervall</List.Header>
                           <List.Description>{timeDescription}, {start} - {end}</List.Description>
                       </List.Content>
                   </List.Item>

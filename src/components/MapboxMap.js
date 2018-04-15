@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ReactMapboxGl, {GeoJSONLayer} from "react-mapbox-gl";
-import * as config from './config.js'
+import * as config from '../config.js'
 
 const Map = ReactMapboxGl({
     accessToken: "not-needed",
