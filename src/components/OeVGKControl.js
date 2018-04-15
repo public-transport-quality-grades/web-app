@@ -167,7 +167,6 @@ class OevGKControl extends Component<{}, State> {
                                     onChange={this.handleTimeSelect}/>
                         </div>
                         {selectedRating &&
-                            /*<RatingInfoPanel rating={availableRatings[parseInt(selectedRatingId, 10)]} />*/
                             <RatingInfoPanel rating={selectedRating} />
                         }
                     </Accordion.Content>
