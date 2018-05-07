@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  nginx:
+    image: nginx:mainline-alpine
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 8080:80
+    links:
+      - web
+      - backend
+
+  web:
+    build: 
+      context: ../
+
+  backend:
+    image: oevgk18/backend
+    volumes:
+      - ./oevgk18-data:/backend/data
