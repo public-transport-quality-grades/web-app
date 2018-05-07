@@ -11,8 +11,10 @@ const Map = ReactMapboxGl({
 type Coordinate = number[]
 
 type Props = {
-    data: {},
-    showLayer: boolean
+    oeVKG18Data: {},
+    oeVKGAREData: {},
+    showOeVGK18: boolean,
+    showOeVGKARE: boolean
 }
 
 type State = {
@@ -38,14 +40,27 @@ export default class MapboxMap extends React.Component<Props, State> {
                     height: "100vh",
                     width: "100vw"
                 }}>
-                {this.props.showLayer &&
-                <GeoJSONLayer data={this.props.data}
+                {this.props.showOeVGK18 &&
+                <GeoJSONLayer data={this.props.oeVKG18Data}
                               fillPaint={{
                                   "fill-color": ["get", "fill"],
                                   "fill-opacity": ["get", "fill-opacity"],
                                   "fill-outline-color": ["get", "stroke"]
                               }}/>
-                }}
+                }
+                {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
+                <GeoJSONLayer data={this.props.oeVKGAREData}
+                              fillPaint={{
+                                  "fill-color": ["case",
+                                      ["==", ["get", "KLASSE"], "A"], config.colorsARE.A,
+                                      ["==", ["get", "KLASSE"], "B"], config.colorsARE.B,
+                                      ["==", ["get", "KLASSE"], "C"], config.colorsARE.C,
+                                      ["==", ["get", "KLASSE"], "D"], config.colorsARE.D,
+                                      "#ffffff" // default if none match
+                                  ],
+                                  "fill-opacity": 0.5
+                              }}
+                    />
                 }
             </Map>
         );

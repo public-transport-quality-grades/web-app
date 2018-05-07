@@ -27,27 +27,29 @@ export type Rating = {
 }
 
 type State = {
-    oevgk18Enabled: boolean,
-    oevgk93Enabled: boolean,
+    oeVGK18Enabled: boolean,
+    oeVGKAREEnabled: boolean,
     dayOptions: DayOption[],
     timeOptions: TimeOption[],
     availableRatings: Rating[],
     selectedDay: string,
     selectedRatingId: number,
-    mapData: {}
+    mapDataOeVGK18: {},
+    mapDataOeVGKARE: {}
 };
 
 
 class OevGKControl extends Component<{}, State> {
     state = {
-        oevgk18Enabled: true,
-        oevgk93Enabled: false,
+        oeVGK18Enabled: true,
+        oeVGKAREEnabled: false,
         dayOptions: [],
         timeOptions: [],
         availableRatings: [],
         selectedDay: "",
         selectedRatingId: -1,
-        mapData: {}
+        mapDataOeVGK18: {},
+        mapDataOeVGKARE: {}
     };
 
     componentWillMount = () => {
@@ -57,6 +59,9 @@ class OevGKControl extends Component<{}, State> {
     componentWillUpdate = (nextProps: {}, nextState: State) => {
         if (nextState.selectedRatingId !== this.state.selectedRatingId) {
             this.updateMapData(nextState.selectedRatingId);
+        }
+        if (!this.state.oeVGKAREEnabled && nextState.oeVGKAREEnabled) {
+            this.loadOeVGKAREMapData();
         }
     };
 
@@ -110,16 +115,24 @@ class OevGKControl extends Component<{}, State> {
         fetch(`/api/rating/${ratingId}`)
             .then(this.getJsonResponse)
             .then((data: {}) => {
-                this.setState({mapData: data});
+                this.setState({mapDataOeVGK18: data});
+            });
+    };
+
+    loadOeVGKAREMapData = () => {
+        fetch(`/api/oeVGKARE`)
+            .then(this.getJsonResponse)
+            .then((data: {}) => {
+                this.setState({mapDataOeVGKARE: data});
             });
     };
 
     handleOeVGK18Toggle = () => {
-        this.setState({oevgk18Enabled: !this.state.oevgk18Enabled})
+        this.setState({oeVGK18Enabled: !this.state.oeVGK18Enabled})
     };
 
     handleOeVGK93Toggle = () => {
-        this.setState({oevgk93Enabled: !this.state.oevgk93Enabled})
+        this.setState({oeVGKAREEnabled: !this.state.oeVGKAREEnabled});
     };
 
     handleDaySelect = (event: SyntheticMouseEvent<Select>, selectProps: { value: string }) => {
@@ -138,22 +151,22 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oevgk18Enabled, oevgk93Enabled, availableRatings, selectedRatingId} = this.state;
+        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
 
         return (
             <div>
                 <Accordion styled id="control">
-                    <Accordion.Title active={oevgk18Enabled} onClick={this.handleOeVGK18Toggle}>
+                    <Accordion.Title active={oeVGK18Enabled} onClick={this.handleOeVGK18Toggle}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle
-                                  checked={oevgk18Enabled}
+                                  checked={oeVGK18Enabled}
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen 2018"
                                   onClick={this.handleOeVGK18Toggle}/>
                     </Accordion.Title>
-                    <Accordion.Content active={oevgk18Enabled}>
+                    <Accordion.Content active={oeVGK18Enabled}>
                         <div className="dropdowns">
                             <Select fluid
                                     placeholder='Tag auswählen'
@@ -171,14 +184,18 @@ class OevGKControl extends Component<{}, State> {
                         }
                     </Accordion.Content>
 
-                    <Accordion.Title active={oevgk93Enabled} onClick={this.handleOeVGK93Toggle}>
-                        <Checkbox toggle checked={oevgk93Enabled}
+                    <Accordion.Title active={oeVGKAREEnabled} onClick={this.handleOeVGK93Toggle}>
+                        <Checkbox toggle checked={oeVGKAREEnabled}
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen ARE"
                                   onClick={this.handleOeVGK93Toggle}/>
                     </Accordion.Title>
                 </Accordion>
-                <MapboxMap data={this.state.mapData} showLayer={this.state.oevgk18Enabled}/>
+                <MapboxMap oeVKG18Data={this.state.mapDataOeVGK18}
+                           oeVKGAREData={this.state.mapDataOeVGKARE}
+                           showOeVGK18={oeVGK18Enabled}
+                           showOeVGKARE={oeVGKAREEnabled}
+                />
             </div>
         );
     }
