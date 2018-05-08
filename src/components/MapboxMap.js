@@ -45,7 +45,6 @@ export default class MapboxMap extends React.Component<Props, State> {
                               fillPaint={{
                                   "fill-color": ["get", "fill"],
                                   "fill-opacity": ["get", "fill-opacity"],
-                                  "fill-outline-color": ["get", "stroke"]
                               }}/>
                 }
                 {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
