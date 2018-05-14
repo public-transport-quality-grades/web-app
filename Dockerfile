@@ -1,6 +1,7 @@
 FROM node:9-alpine
 COPY . /app
 WORKDIR /app
+RUN npm install
 RUN npm run build
 
 FROM node:9-alpine
