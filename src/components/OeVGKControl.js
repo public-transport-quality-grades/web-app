@@ -1,8 +1,10 @@
 //@flow
 import React, {Component} from 'react';
 import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
+import * as config from '../config.js'
 import MapboxMap from './MapboxMap';
 import RatingInfoPanel from './RatingInfoPanel';
+import ColorLegend from './ColorLegend';
 import './OeVGKControl.css';
 
 type DayOption = {
@@ -26,6 +28,10 @@ export type Rating = {
     }
 }
 
+type OeVGK18Data = {
+    colors? : {}
+}
+
 type State = {
     oeVGK18Enabled: boolean,
     oeVGKAREEnabled: boolean,
@@ -34,7 +40,7 @@ type State = {
     availableRatings: Rating[],
     selectedDay: string,
     selectedRatingId: number,
-    mapDataOeVGK18: {},
+    mapDataOeVGK18: OeVGK18Data,
     mapDataOeVGKARE: {}
 };
 
@@ -114,7 +120,7 @@ class OevGKControl extends Component<{}, State> {
     updateMapData = (ratingId: number) => {
         fetch(`/api/rating/${ratingId}`)
             .then(this.getJsonResponse)
-            .then((data: {}) => {
+            .then((data: OeVGK18Data) => {
                 this.setState({mapDataOeVGK18: data});
             });
     };
@@ -151,7 +157,8 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId} = this.state;
+        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
+            availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
 
@@ -182,17 +189,25 @@ class OevGKControl extends Component<{}, State> {
                         {selectedRating &&
                             <RatingInfoPanel rating={selectedRating} />
                         }
+
+                        {!!mapDataOeVGK18.colors &&
+                            <ColorLegend colors={mapDataOeVGK18.colors}/>
+                        }
                     </Accordion.Content>
 
                     <Accordion.Title active={oeVGKAREEnabled} onClick={this.handleOeVGK93Toggle}>
+                        <Icon name='dropdown'/>
                         <Checkbox toggle checked={oeVGKAREEnabled}
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen ARE"
                                   onClick={this.handleOeVGK93Toggle}/>
                     </Accordion.Title>
+                    <Accordion.Content active={oeVGKAREEnabled}>
+                        <ColorLegend colors={config.colorsARE}/>
+                    </Accordion.Content>
                 </Accordion>
-                <MapboxMap oeVKG18Data={this.state.mapDataOeVGK18}
-                           oeVKGAREData={this.state.mapDataOeVGKARE}
+                <MapboxMap oeVKG18Data={mapDataOeVGK18}
+                           oeVKGAREData={mapDataOeVGKARE}
                            showOeVGK18={oeVGK18Enabled}
                            showOeVGKARE={oeVGKAREEnabled}
                 />
