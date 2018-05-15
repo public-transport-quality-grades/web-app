@@ -1,0 +1,16 @@
+div.colorLegend {
+    display: grid;
+    grid-template-columns: 30px auto;
+    grid-gap: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+div.colorPane {
+    width: 25px;
+    height: 25px;
+}
+
+div.legendDescription {
+    vertical-align: middle;
+}
