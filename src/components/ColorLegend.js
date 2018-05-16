@@ -9,14 +9,14 @@ class ColorLegend extends Component<Props> {
 
     createLegend = () => {
         let legendEntries = [];
-        Object.keys(this.props.colors).forEach((grade, _) => {
+        Object.keys(this.props.colors).forEach((grade, index) => {
            const color = this.props.colors[grade];
             legendEntries.push(
-                       <div className="colorPane" title={color} style={{
+                       <div className="colorPane" title={color} key={index + color} style={{
                            backgroundColor: color
                        }} />);
              legendEntries.push(
-                 <div className="legendDescription">
+                 <div className="legendDescription" key={index + grade}>
                      Güteklasse {grade}
                  </div>
            );

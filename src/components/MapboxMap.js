@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ReactMapboxGl, {GeoJSONLayer} from "react-mapbox-gl";
-import * as config from '../config.js'
+import * as config from '../config.js';
 
 const Map = ReactMapboxGl({
     accessToken: "not-needed",
@@ -45,6 +45,7 @@ export default class MapboxMap extends React.Component<Props, State> {
                               fillPaint={{
                                   "fill-color": ["get", "fill"],
                                   "fill-opacity": ["get", "fill-opacity"],
+                                  "fill-outline-color": "rgba(0, 0, 0, 0)" // set an invisible outline with opacity 0
                               }}/>
                 }
                 {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
