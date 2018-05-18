@@ -160,7 +160,7 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
+        const {oeVGK18Enabled, oeVGK18Loaded, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
             availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
@@ -209,12 +209,10 @@ class OevGKControl extends Component<{}, State> {
                         <ColorLegend colors={config.colorsARE}/>
                     </Accordion.Content>
                 </Accordion>
-                {/*<MapboxMap oeVKG18Data={mapDataOeVGK18}*/}
-                           {/*oeVKGAREData={mapDataOeVGKARE}*/}
-                           {/*showOeVGK18={oeVGK18Enabled}*/}
-                           {/*showOeVGKARE={oeVGKAREEnabled}*/}
-                {/*/>*/}
-                <LeafletMap showLayer={this.state.oeVGK18Loaded} geojson={mapDataOeVGK18}/>
+                <LeafletMap 
+                    oeVKG18Data={mapDataOeVGK18} oeVKGAREData={mapDataOeVGKARE} 
+                    showOeVGK18={oeVGK18Enabled && oeVGK18Loaded} showOeVGKARE={oeVGKAREEnabled}
+                    selectedRatingId={selectedRatingId} />
             </div>
         );
     }
