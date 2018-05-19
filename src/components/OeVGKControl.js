@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
 import * as config from '../config.js'
-import MapboxMap from './MapboxMap';
+import LeafletMap from './LeafletMap';
 import RatingInfoPanel from './RatingInfoPanel';
 import ColorLegend from './ColorLegend';
 import './OeVGKControl.css';
@@ -34,6 +34,7 @@ type OeVGK18Data = {
 
 type State = {
     oeVGK18Enabled: boolean,
+    oeVGK18Loaded: boolean,
     oeVGKAREEnabled: boolean,
     dayOptions: DayOption[],
     timeOptions: TimeOption[],
@@ -48,6 +49,7 @@ type State = {
 class OevGKControl extends Component<{}, State> {
     state = {
         oeVGK18Enabled: true,
+        oeVGK18Loaded: false,
         oeVGKAREEnabled: false,
         dayOptions: [],
         timeOptions: [],
@@ -121,7 +123,7 @@ class OevGKControl extends Component<{}, State> {
         fetch(`/api/rating/${ratingId}`)
             .then(this.getJsonResponse)
             .then((data: OeVGK18Data) => {
-                this.setState({mapDataOeVGK18: data});
+                this.setState({mapDataOeVGK18: data, oeVGK18Loaded: true});
             });
     };
 
@@ -157,7 +159,7 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
+        const {oeVGK18Enabled, oeVGK18Loaded, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
             availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
@@ -206,11 +208,10 @@ class OevGKControl extends Component<{}, State> {
                         <ColorLegend colors={config.colorsARE}/>
                     </Accordion.Content>
                 </Accordion>
-                <MapboxMap oeVKG18Data={mapDataOeVGK18}
-                           oeVKGAREData={mapDataOeVGKARE}
-                           showOeVGK18={oeVGK18Enabled}
-                           showOeVGKARE={oeVGKAREEnabled}
-                />
+                <LeafletMap 
+                    oeVKG18Data={mapDataOeVGK18} oeVKGAREData={mapDataOeVGKARE} 
+                    showOeVGK18={oeVGK18Enabled && oeVGK18Loaded} showOeVGKARE={oeVGKAREEnabled}
+                    selectedRatingId={selectedRatingId} />
             </div>
         );
     }
