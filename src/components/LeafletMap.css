@@ -7,6 +7,6 @@
   right: 0;
 }
 
-.leaflet-geojson-layer {
+.leaflet-container svg {
   opacity: 0.6
 }
