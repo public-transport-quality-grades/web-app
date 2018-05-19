@@ -29,7 +29,7 @@ export default class LeafletMap extends React.Component<Props, State> {
     zoom: 14
   };
 
-  getStyle = (feature: any, layer: any) => {
+  getOeVGK18Style = (feature: any, layer: any) => {
     return {
         stroke: false,
         fillColor: feature.properties.fill,
@@ -37,15 +37,15 @@ export default class LeafletMap extends React.Component<Props, State> {
     }
   };
 
-  getOeVKGAREDataStyle = (feature: any, layer: any) => {
+  getOeVKGAREStyle = (feature: any, layer: any) => {
     var styleObj = {fillOpacity: 0}
     switch (feature.properties.KLASSE) {
-      case 'A': styleObj.color = config.colorsARE.A; break;
-      case 'B': styleObj.color = config.colorsARE.B; break;
-      case 'C': styleObj.color = config.colorsARE.C; break;
-      case 'D': styleObj.color = config.colorsARE.D; break;
+      case "A": styleObj.color = config.colorsARE.A; break;
+      case "B": styleObj.color = config.colorsARE.B; break;
+      case "C": styleObj.color = config.colorsARE.C; break;
+      case "D": styleObj.color = config.colorsARE.D; break;
       default: styleObj.color = config.colorsARE.D;
-    }
+    }    
     return styleObj;
   };
 
@@ -58,10 +58,10 @@ export default class LeafletMap extends React.Component<Props, State> {
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
         { this.props.showOeVGK18 &&
-          <GeoJSON key={this.props.selectedRatingId} data={this.props.oeVKG18Data} style={this.getStyle} className="leaflet-geojson-layer"/>
+          <GeoJSON key={this.props.selectedRatingId} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} className="leaflet-geojson-layer" />
         }
         {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
-          <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREDataStyle} />
+          <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle} />
         }
       </Map>
     );
