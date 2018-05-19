@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
 import * as config from '../config.js'
-//import MapboxMap from './MapboxMap';
 import LeafletMap from './LeafletMap';
 import RatingInfoPanel from './RatingInfoPanel';
 import ColorLegend from './ColorLegend';
