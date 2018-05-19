@@ -211,7 +211,7 @@ class OevGKControl extends Component<{}, State> {
                 <LeafletMap 
                     oeVKG18Data={mapDataOeVGK18} oeVKGAREData={mapDataOeVGKARE} 
                     showOeVGK18={oeVGK18Enabled && oeVGK18Loaded} showOeVGKARE={oeVGKAREEnabled}
-                    selectedRatingId={selectedRatingId} />
+                    selectedRatingId={selectedRatingIndex} />
             </div>
         );
     }

@@ -58,7 +58,7 @@ export default class LeafletMap extends React.Component<Props, State> {
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
         { this.props.showOeVGK18 &&
-          <GeoJSON key={this.props.selectedRatingId} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} className="leaflet-geojson-layer" />
+          <GeoJSON key={this.props.selectedRatingId} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
         }
         {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
           <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle} />
