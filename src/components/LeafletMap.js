@@ -10,15 +10,14 @@ type Props = {
     oeVKG18Data: {},
     oeVKGAREData: {},
     showOeVGK18: boolean,
-    showOeVGKARE: boolean,
-    selectedRatingId: number
+    showOeVGKARE: boolean
 }
 
 type State = {
     lat: number,
     lng: number,
     zoom: number,
-
+    selectedOeVKG18Id: string
 }
 
 export default class LeafletMap extends React.Component<Props, State> {
@@ -26,7 +25,8 @@ export default class LeafletMap extends React.Component<Props, State> {
   state = {
     lat: 46.8513,
     lng: 9.5264,
-    zoom: 14
+    zoom: 14,
+    selectedOeVKG18Id: ''
   };
 
   getOeVGK18Style = (feature: any, layer: any) => {
@@ -49,6 +49,16 @@ export default class LeafletMap extends React.Component<Props, State> {
     return styleObj;
   };
 
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    var nextSelectedOeVKG18Id = nextProps.oeVKG18Data['type-of-day'] + nextProps.oeVKG18Data['type-of-interval'];
+    if (prevState.selectedOeVKG18Id !== nextSelectedOeVKG18Id) {
+      var newState = prevState;
+      newState.selectedOeVKG18Id = nextSelectedOeVKG18Id;
+      return newState;
+    }
+    return null;
+  };
+
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
@@ -58,7 +68,7 @@ export default class LeafletMap extends React.Component<Props, State> {
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
         { this.props.showOeVGK18 &&
-          <GeoJSON key={this.props.selectedRatingId} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
+          <GeoJSON key={this.state.selectedOeVKG18Id} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
         }
         {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
           <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle} />
