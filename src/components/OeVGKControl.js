@@ -60,15 +60,15 @@ class OevGKControl extends Component<{}, State> {
         mapDataOeVGKARE: {}
     };
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         this.updateDayOptions().then(this.updateTimeOptions);
     };
 
-    componentWillUpdate = (nextProps: {}, nextState: State) => {
-        if (nextState.selectedRatingId !== this.state.selectedRatingId) {
-            this.updateMapData(nextState.selectedRatingId);
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.selectedRatingId !== this.state.selectedRatingId) {
+            this.updateMapData(this.state.selectedRatingId);
         }
-        if (!this.state.oeVGKAREEnabled && nextState.oeVGKAREEnabled) {
+        if (!prevState.oeVGKAREEnabled && this.state.oeVGKAREEnabled) {
             this.loadOeVGKAREMapData();
         }
     };
@@ -210,8 +210,7 @@ class OevGKControl extends Component<{}, State> {
                 </Accordion>
                 <LeafletMap 
                     oeVKG18Data={mapDataOeVGK18} oeVKGAREData={mapDataOeVGKARE} 
-                    showOeVGK18={oeVGK18Enabled && oeVGK18Loaded} showOeVGKARE={oeVGKAREEnabled}
-                    selectedRatingId={selectedRatingIndex} />
+                    showOeVGK18={oeVGK18Enabled && oeVGK18Loaded} showOeVGKARE={oeVGKAREEnabled} />
             </div>
         );
     }
