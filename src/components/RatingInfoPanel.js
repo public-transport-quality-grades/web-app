@@ -13,8 +13,8 @@ class RatingInfoPanel extends Component<Props> {
     };
 
     render(){
-        const {day, typeOfDay, timeInterval} = this.props.rating;
-        const {timeDescription, start, end} = timeInterval;
+        const {due_date, type_of_day, time_interval} = this.props.rating;
+        const {time_description, start, end} = time_interval;
 
         return (
           <div className="ratingInfoPanel">
@@ -22,13 +22,13 @@ class RatingInfoPanel extends Component<Props> {
                   <List.Item>
                       <List.Content>
                           <List.Header>Stichtag</List.Header>
-                          <List.Description>{typeOfDay}, {this.formatDate(day)}</List.Description>
+                          <List.Description>{type_of_day}, {this.formatDate(due_date)}</List.Description>
                       </List.Content>
                   </List.Item>
                   <List.Item>
                       <List.Content>
                           <List.Header>Zeitintervall</List.Header>
-                          <List.Description>{timeDescription}, {start} - {end}</List.Description>
+                          <List.Description>{time_description}, {start} - {end}</List.Description>
                       </List.Content>
                   </List.Item>
               </List>

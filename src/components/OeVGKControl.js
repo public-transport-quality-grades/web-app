@@ -19,10 +19,10 @@ type TimeOption = {
 
 export type Rating = {
     id: number,
-    day: Date,
-    typeOfDay: string,
-    timeInterval: {
-        timeDescription: string,
+    due_date: Date,
+    type_of_day: string,
+    time_interval: {
+        time_description: string,
         start: string,
         end: string
     }
@@ -74,10 +74,9 @@ class OevGKControl extends Component<{}, State> {
     };
 
     updateDayOptions = (): Promise<string> => {
-        return fetch('/api/availableDays')
+        return fetch('/api/typesOfDays')
             .then(this.getJsonResponse)
             .then((data: any) => {
-                // TODO error handling
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
                 let newDayOptions = data.days.map((day): DayOption => {
@@ -90,20 +89,20 @@ class OevGKControl extends Component<{}, State> {
     };
 
     updateTimeOptions = (selectedDay: string) => {
-        fetch(`/api/availableRatings?typeOfDay=${selectedDay}`)
+        fetch(`/api/gradings?typeOfDay=${selectedDay}`)
             .then(this.getJsonResponse)
             .then((data: Rating[]) => {
                 // TODO error handling
 
                 // correctly parse day as date
                 const ratings: Rating[] = data.map((rating: Rating): Rating => {
-                    rating.day = new Date(rating.day);
+                    rating.due_date = new Date(rating.due_date);
                     return rating;
                 });
 
                 let newTimeOptions: TimeOption[] = ratings.map((rating: Rating): TimeOption => {
                     return {
-                        text: rating.timeInterval.timeDescription,
+                        text: rating.time_interval.time_description,
                         value: rating.id
                     };
                 });
@@ -120,7 +119,7 @@ class OevGKControl extends Component<{}, State> {
     };
 
     updateMapData = (ratingId: number) => {
-        fetch(`/api/rating/${ratingId}`)
+        fetch(`/api/gradings/${ratingId}`)
             .then(this.getJsonResponse)
             .then((data: OeVGK18Data) => {
                 this.setState({mapDataOeVGK18: data, oeVGK18Loaded: true});
@@ -128,7 +127,7 @@ class OevGKControl extends Component<{}, State> {
     };
 
     loadOeVGKAREMapData = () => {
-        fetch(`/api/oeVGKARE`)
+        fetch(`/api/oevgkARE`)
             .then(this.getJsonResponse)
             .then((data: {}) => {
                 this.setState({mapDataOeVGKARE: data});
