@@ -3,6 +3,7 @@ import React from 'react';
 import { Map, TileLayer, GeoJSON, Pane } from 'react-leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
+import VectorgridLayer from './VectorgridLayer';
 require('leaflet/dist/leaflet.css');
 
 
@@ -30,13 +31,14 @@ export default class LeafletMap extends React.Component<Props, State> {
     lat: 46.8513,
     lng: 9.5264,
     zoom: 14,
-    selectedOeVKG18Id: ''
+    selectedOeVKG18Id: 'bal'
   };
 
-  getOeVGK18Style = (feature: any, layer: any) => {
+  getOeVGK18Style = (properties: any, zoom: any) => {
     return {
         stroke: false,
-        fillColor: feature.properties.fill,
+        fill: true,
+        fillColor: properties.fill,
         fillOpacity: 1
     }
   };
@@ -66,7 +68,7 @@ export default class LeafletMap extends React.Component<Props, State> {
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
-      <Map center={position} zoom={this.state.zoom}>
+      <Map center={position} zoom={this.state.zoom} maxZoom={17} minZoom={8}>
         <TileLayer
           attribution={'Elevation model &copy; Bundesamt für Landestopografie ' +
           '<a href="https://www.swisstopo.admin.ch/">Swisstopo</a> | ' +
@@ -74,15 +76,15 @@ export default class LeafletMap extends React.Component<Props, State> {
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
         <Pane name={'oevgk18Pane'}>
-          { this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
-          <GeoJSON key={this.state.selectedOeVKG18Id}
-                   data={this.props.oeVKG18Data} style={this.getOeVGK18Style}/>
-          }
+            { //this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
+                <VectorgridLayer layerKey={this.state.selectedOeVKG18Id} url="/data/out/{z}/{x}/{y}.pbf"
+                                 opacity={0.6} featureStyle={this.getOeVGK18Style}/>
+            }
         </Pane>
-          <Pane name={'oevgkAREPane'}>
-          {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
-          <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle}/>
-        }
+        <Pane name={'oevgkAREPane'}>
+            {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
+                <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle}/>
+            }
         </Pane>
       </Map>
     );
