@@ -7,7 +7,11 @@ require('leaflet/dist/leaflet.css');
 
 
 type Props = {
-    oeVKG18Data: {},
+    oeVKG18Data: {
+        colors?: {},
+        'type-of-day': string,
+        'type-of-interval': string
+    },
     oeVKGAREData: {},
     showOeVGK18: boolean,
     showOeVGKARE: boolean
@@ -38,7 +42,7 @@ export default class LeafletMap extends React.Component<Props, State> {
   };
 
   getOeVKGAREStyle = (feature: any, layer: any) => {
-    var styleObj = {fillOpacity: 0}
+    let styleObj = {fillOpacity: 0, color: undefined};
     switch (feature.properties.KLASSE) {
       case "A": styleObj.color = config.colorsARE.A; break;
       case "B": styleObj.color = config.colorsARE.B; break;
@@ -49,10 +53,10 @@ export default class LeafletMap extends React.Component<Props, State> {
     return styleObj;
   };
 
-  static getDerivedStateFromProps = (nextProps, prevState) => {
-    var nextSelectedOeVKG18Id = nextProps.oeVKG18Data['type-of-day'] + nextProps.oeVKG18Data['type-of-interval'];
+  static getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
+    const nextSelectedOeVKG18Id = nextProps.oeVKG18Data['type-of-day'] + nextProps.oeVKG18Data['type-of-interval'];
     if (prevState.selectedOeVKG18Id !== nextSelectedOeVKG18Id) {
-      var newState = prevState;
+      let newState = prevState;
       newState.selectedOeVKG18Id = nextSelectedOeVKG18Id;
       return newState;
     }

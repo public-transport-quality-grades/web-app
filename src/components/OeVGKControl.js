@@ -29,7 +29,9 @@ export type Rating = {
 }
 
 type OeVGK18Data = {
-    colors? : {}
+    colors?: {},
+    'type-of-day': string,
+    'type-of-interval': string
 }
 
 type State = {
@@ -56,7 +58,7 @@ class OevGKControl extends Component<{}, State> {
         availableRatings: [],
         selectedDay: "",
         selectedRatingId: -1,
-        mapDataOeVGK18: {},
+        mapDataOeVGK18: {'type-of-day': '', 'type-of-interval': ''},
         mapDataOeVGKARE: {}
     };
 
@@ -64,7 +66,7 @@ class OevGKControl extends Component<{}, State> {
         this.updateDayOptions().then(this.updateTimeOptions);
     };
 
-    componentDidUpdate = (prevProps, prevState) => {
+    componentDidUpdate = (prevProps: {}, prevState: State) => {
         if (prevState.selectedRatingId !== this.state.selectedRatingId) {
             this.updateMapData(this.state.selectedRatingId);
         }
