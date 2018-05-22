@@ -71,8 +71,9 @@ export default class LeafletMap extends React.Component<Props, State> {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
-        { this.props.showOeVGK18 &&
-          <GeoJSON key={this.state.selectedOeVKG18Id} data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
+        { this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
+          <GeoJSON key={this.state.selectedOeVKG18Id}
+                   data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
         }
         {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
           <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle} />
