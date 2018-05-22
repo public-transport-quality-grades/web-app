@@ -11,3 +11,7 @@
 div.dropdowns > * {
     margin-bottom: 10pt;
 }
+
+.ui.inline.loader {
+    margin-left: 10pt;
+}
