@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import { Map, TileLayer, GeoJSON } from 'react-leaflet';
+import { Map, TileLayer, GeoJSON, Pane } from 'react-leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
 require('leaflet/dist/leaflet.css');
@@ -73,13 +73,17 @@ export default class LeafletMap extends React.Component<Props, State> {
           '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
-        { this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
+        <Pane name={'oevgk18Pane'}>
+          { this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
           <GeoJSON key={this.state.selectedOeVKG18Id}
-                   data={this.props.oeVKG18Data} style={this.getOeVGK18Style} />
+                   data={this.props.oeVKG18Data} style={this.getOeVGK18Style}/>
+          }
+        </Pane>
+          <Pane name={'oevgkAREPane'}>
+          {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
+          <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle}/>
         }
-        {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
-          <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle} />
-        }
+        </Pane>
       </Map>
     );
   }
