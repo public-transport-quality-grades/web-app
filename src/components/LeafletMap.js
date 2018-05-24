@@ -68,7 +68,9 @@ export default class LeafletMap extends React.Component<Props, State> {
     return (
       <Map center={position} zoom={this.state.zoom}>
         <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          attribution='Elevation model &copy; Bundesamt für Landestopografie
+          <a href="https://www.swisstopo.admin.ch/">Swisstopo</a> |
+          &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
         />
         { this.props.showOeVGK18 && this.props.oeVKG18Data.hasOwnProperty('type') &&
