@@ -25,18 +25,13 @@ export type Rating = {
         time_description: string,
         start: string,
         end: string
-    }
+    },
+    tile_name: string
 }
 
-type OeVGK18Data = {
-    colors?: {},
-    'type-of-day': string,
-    'type-of-interval': string
-}
 
 type State = {
     oeVGK18Enabled: boolean,
-    oeVGK18Loading: boolean,
     oeVGKAREEnabled: boolean,
     oeVGKARELoading: boolean,
     dayOptions: DayOption[],
@@ -44,7 +39,6 @@ type State = {
     availableRatings: Rating[],
     selectedDay: string,
     selectedRatingId: number,
-    mapDataOeVGK18: OeVGK18Data,
     mapDataOeVGKARE: {}
 };
 
@@ -52,7 +46,6 @@ type State = {
 class OevGKControl extends Component<{}, State> {
     state = {
         oeVGK18Enabled: true,
-        oeVGK18Loading: false,
         oeVGKARELoading: false,
         oeVGKAREEnabled: false,
         dayOptions: [],
@@ -60,7 +53,6 @@ class OevGKControl extends Component<{}, State> {
         availableRatings: [],
         selectedDay: "",
         selectedRatingId: -1,
-        mapDataOeVGK18: {'type-of-day': '', 'type-of-interval': ''},
         mapDataOeVGKARE: {}
     };
 
@@ -69,10 +61,6 @@ class OevGKControl extends Component<{}, State> {
     };
 
     componentDidUpdate = (prevProps: {}, prevState: State) => {
-        if (prevState.selectedRatingId !== this.state.selectedRatingId) {
-            this.setState({oeVGK18Loading: true});
-            this.updateMapData(this.state.selectedRatingId);
-        }
         if (!prevState.oeVGKAREEnabled && this.state.oeVGKAREEnabled) {
             this.setState({oeVGKARELoading: true});
             this.loadOeVGKAREMapData();
@@ -124,14 +112,6 @@ class OevGKControl extends Component<{}, State> {
             })
     };
 
-    updateMapData = (ratingId: number) => {
-        fetch(`/api/gradings/${ratingId}`)
-            .then(this.getJsonResponse)
-            .then((data: OeVGK18Data) => {
-                this.setState({mapDataOeVGK18: data, oeVGK18Loading: false});
-            });
-    };
-
     loadOeVGKAREMapData = () => {
         fetch(`/api/oevgkARE`)
             .then(this.getJsonResponse)
@@ -143,7 +123,6 @@ class OevGKControl extends Component<{}, State> {
     handleOeVGK18Toggle = () => {
         this.setState({
             oeVGK18Enabled: !this.state.oeVGK18Enabled,
-            oeVGK18Loading: false
         });
     };
 
@@ -170,7 +149,7 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGK18, mapDataOeVGKARE,
+        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGKARE,
             availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
@@ -185,7 +164,6 @@ class OevGKControl extends Component<{}, State> {
                               className="accordionTitle"
                               label="ÖV-Güteklassen 2018"
                               onClick={this.handleOeVGK18Toggle}/>
-                        <Loader inline active={this.state.oeVGK18Loading} />
                     </Accordion.Title>
                     <Accordion.Content active={oeVGK18Enabled}>
                         <div className="dropdowns">
@@ -204,8 +182,8 @@ class OevGKControl extends Component<{}, State> {
                             <RatingInfoPanel rating={selectedRating} />
                         }
 
-                        {!!mapDataOeVGK18.colors &&
-                            <ColorLegend colors={mapDataOeVGK18.colors}/>
+                        {oeVGK18Enabled &&
+                            <ColorLegend colors={config.colorsOeVGK18}/>
                         }
                     </Accordion.Content>
 
@@ -222,7 +200,7 @@ class OevGKControl extends Component<{}, State> {
                     </Accordion.Content>
                 </Accordion>
                 <LeafletMap 
-                    oeVKG18Data={mapDataOeVGK18} oeVKGAREData={mapDataOeVGKARE} 
+                    oeVGK18Rating={selectedRating} oeVKGAREData={mapDataOeVGKARE}
                     showOeVGK18={oeVGK18Enabled} showOeVGKARE={oeVGKAREEnabled} />
             </div>
         );

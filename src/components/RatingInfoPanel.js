@@ -9,7 +9,7 @@ type Props = {
 class RatingInfoPanel extends Component<Props> {
 
     formatDate = (date: Date): string => {
-      return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
+      return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
     };
 
     render(){
