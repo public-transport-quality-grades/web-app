@@ -9,10 +9,17 @@ services:
     links:
       - web
       - backend
+      - tileserver
 
   web:
     build: 
       context: ../
+
+  tileserver:
+    image: klokantech/tileserver-gl
+    command: ["-p", "8080",  "-c", "tileserver-config.json", "--verbose"]
+    volumes:
+      - ./oevgk18-data:/data
 
   backend:
     image: oevgk18/backend
