@@ -1,6 +1,6 @@
 //@flow
 import React, {Component} from 'react';
-import {Accordion, Icon, Checkbox, Select, Loader} from 'semantic-ui-react';
+import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
 import * as config from '../config.js'
 import LeafletMap from './LeafletMap';
 import RatingInfoPanel from './RatingInfoPanel';
@@ -33,7 +33,6 @@ export type Rating = {
 type State = {
     oeVGK18Enabled: boolean,
     oeVGKAREEnabled: boolean,
-    oeVGKARELoading: boolean,
     dayOptions: DayOption[],
     timeOptions: TimeOption[],
     availableRatings: Rating[],
@@ -46,7 +45,6 @@ type State = {
 class OevGKControl extends Component<{}, State> {
     state = {
         oeVGK18Enabled: true,
-        oeVGKARELoading: false,
         oeVGKAREEnabled: false,
         dayOptions: [],
         timeOptions: [],
@@ -58,13 +56,6 @@ class OevGKControl extends Component<{}, State> {
 
     componentDidMount = () => {
         this.updateDayOptions().then(this.updateTimeOptions);
-    };
-
-    componentDidUpdate = (prevProps: {}, prevState: State) => {
-        if (!prevState.oeVGKAREEnabled && this.state.oeVGKAREEnabled) {
-            this.setState({oeVGKARELoading: true});
-            this.loadOeVGKAREMapData();
-        }
     };
 
     updateDayOptions = (): Promise<string> => {
@@ -112,24 +103,15 @@ class OevGKControl extends Component<{}, State> {
             })
     };
 
-    loadOeVGKAREMapData = () => {
-        fetch(`/api/oevgkARE`)
-            .then(this.getJsonResponse)
-            .then((data: {}) => {
-                this.setState({mapDataOeVGKARE: data, oeVGKARELoading: false});
-            });
-    };
-
     handleOeVGK18Toggle = () => {
         this.setState({
-            oeVGK18Enabled: !this.state.oeVGK18Enabled,
+            oeVGK18Enabled: !this.state.oeVGK18Enabled
         });
     };
 
     handleOeVGK93Toggle = () => {
         this.setState({
-            oeVGKAREEnabled: !this.state.oeVGKAREEnabled,
-            oeVGKARELoading: false
+            oeVGKAREEnabled: !this.state.oeVGKAREEnabled
         });
     };
 
@@ -193,7 +175,6 @@ class OevGKControl extends Component<{}, State> {
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen ARE"
                                   onClick={this.handleOeVGK93Toggle}/>
-                        <Loader inline active={this.state.oeVGKARELoading} />
                     </Accordion.Title>
                     <Accordion.Content active={oeVGKAREEnabled}>
                         <ColorLegend colors={config.colorsARE}/>
