@@ -15,13 +15,24 @@ services:
     build: 
       context: ../
 
-  tileserver:
-    image: klokantech/tileserver-gl
-    command: ["-p", "8080",  "-c", "tileserver-config.json", "--verbose"]
+  tile-server:
+    build:
+      context: tile-server/
+    command: ["-p", "8080",  "-c", "/data/tileserver-config.json", "--verbose"]
     volumes:
-      - ./oevgk18-data:/data
+      - tile-data:/data
 
   backend:
     image: oevgk18/backend
     volumes:
-      - ./oevgk18-data:/backend/data
+      - ./generator-results/:/backend/data
+
+  tile-converter:
+    build:
+      context: tile-converter/
+    volumes:
+      - ./generator-results:/generator-results
+      - tile-data:/tile-data
+
+volumes:
+  tile-data:
