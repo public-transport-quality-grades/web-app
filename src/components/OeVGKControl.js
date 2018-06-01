@@ -37,8 +37,7 @@ type State = {
     timeOptions: TimeOption[],
     availableRatings: Rating[],
     selectedDay: string,
-    selectedRatingId: number,
-    mapDataOeVGKARE: {}
+    selectedRatingId: number
 };
 
 
@@ -50,8 +49,7 @@ class OevGKControl extends Component<{}, State> {
         timeOptions: [],
         availableRatings: [],
         selectedDay: "",
-        selectedRatingId: -1,
-        mapDataOeVGKARE: {}
+        selectedRatingId: -1
     };
 
     componentDidMount = () => {
@@ -131,15 +129,14 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGKARE,
-            availableRatings, selectedRatingId} = this.state;
+        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
 
         return (
             <div>
                 <Accordion styled id="control">
-                    <Accordion.Title active={oeVGK18Enabled} onClick={this.handleOeVGK18Toggle}>
+                    <Accordion.Title active={oeVGK18Enabled}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle
                               checked={oeVGK18Enabled}
@@ -169,7 +166,7 @@ class OevGKControl extends Component<{}, State> {
                         }
                     </Accordion.Content>
 
-                    <Accordion.Title active={oeVGKAREEnabled} onClick={this.handleOeVGK93Toggle}>
+                    <Accordion.Title active={oeVGKAREEnabled}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle checked={oeVGKAREEnabled}
                                   className="accordionTitle"
@@ -181,8 +178,9 @@ class OevGKControl extends Component<{}, State> {
                     </Accordion.Content>
                 </Accordion>
                 <LeafletMap 
-                    oeVGK18Rating={selectedRating} oeVKGAREData={mapDataOeVGKARE}
-                    showOeVGK18={oeVGK18Enabled} showOeVGKARE={oeVGKAREEnabled} />
+                    oeVGK18Rating={selectedRating}
+                    showOeVGK18={oeVGK18Enabled} 
+                    showOeVGKARE={oeVGKAREEnabled} />
             </div>
         );
     }

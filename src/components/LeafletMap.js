@@ -12,7 +12,6 @@ type Props = {
     oeVGK18Rating: {
         tile_name: string
     },
-    oeVKGAREData: {},
     showOeVGK18: boolean,
     showOeVGKARE: boolean
 }
