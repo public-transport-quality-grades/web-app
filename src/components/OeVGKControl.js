@@ -29,7 +29,6 @@ export type Rating = {
     tile_name: string
 }
 
-
 type State = {
     oeVGK18Enabled: boolean,
     oeVGKAREEnabled: boolean,
@@ -39,7 +38,6 @@ type State = {
     selectedDay: string,
     selectedRatingId: number
 };
-
 
 class OevGKControl extends Component<{}, State> {
     state = {

@@ -1,6 +1,7 @@
 //@flow
 import React from 'react';
 import {Map, TileLayer, Pane} from 'react-leaflet';
+import L from 'leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
 import VectorgridLayer from './VectorgridLayer';
@@ -56,9 +57,16 @@ export default class LeafletMap extends React.Component<Props, State> {
     };
 
     getTransportStopsStyle = (feature: any, layer: any) => {
+        const LeafIcon = L.Icon.extend({
+            options: {
+                iconSize: [12, 12]
+            }
+        });
+        const stopIcon = new LeafIcon({
+            iconUrl: 'stop-icon.svg'
+        });
         return {
-            radius: 5,
-            color: '#cf52d3'
+            icon: stopIcon
         };
     };
 
@@ -71,6 +79,7 @@ export default class LeafletMap extends React.Component<Props, State> {
             fillOpacity: 1
         }
     };
+
 
     render() {
         const position = [this.state.lat, this.state.lng];
@@ -99,7 +108,6 @@ export default class LeafletMap extends React.Component<Props, State> {
                     <VectorgridLayer
                         layerKey={'oevgkare'}
                         url={"/data/oevgkare/{z}/{x}/{y}.pbf"}
-                        opacity={1}
                         zIndex={3}
                         featureStyle={this.getOeVKGAREStyle}/>
                     }
