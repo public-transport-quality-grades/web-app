@@ -34,4 +34,5 @@ for geojson_file in $GEOJSON_DIR/*.geojson; do
 done
 
 echo "Writing tileserver config"
+# remove trailing comma to make valid geojson
 sed -e "s/@insert_config/${tileserver_entries::-1}/g" $TILESERVER_CONFIG_TEMPLATE > $OUTPUT_DIR/tileserver-config.json
