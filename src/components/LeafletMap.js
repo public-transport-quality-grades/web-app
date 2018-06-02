@@ -1,9 +1,11 @@
 //@flow
 import React from 'react';
-import { Map, TileLayer, GeoJSON, Pane } from 'react-leaflet';
+import {Map, TileLayer, Pane} from 'react-leaflet';
+import L from 'leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
 import VectorgridLayer from './VectorgridLayer';
+
 require('leaflet/dist/leaflet.css');
 
 
@@ -11,7 +13,6 @@ type Props = {
     oeVGK18Rating: {
         tile_name: string
     },
-    oeVKGAREData: {},
     showOeVGK18: boolean,
     showOeVGKARE: boolean
 }
@@ -46,7 +47,27 @@ export default class LeafletMap extends React.Component<Props, State> {
         const map = event.target;
         const {lat, lng} = map.getCenter();
         const zoom = map.getZoom();
-        window.location.hash = `#${zoom}/${lat.toPrecision(5)}/${lng.toPrecision(5)}`
+        window.location.hash = `#${zoom}/${lat.toPrecision(5)}/${lng.toPrecision(5)}`;
+    };
+
+    getOeVKGAREStyle = (properties: any, layer: any) => {
+        return {
+            color: config.colorsARE[properties.KLASSE]
+        };
+    };
+
+    getTransportStopsStyle = (feature: any, layer: any) => {
+        const LeafIcon = L.Icon.extend({
+            options: {
+                iconSize: [12, 12]
+            }
+        });
+        const stopIcon = new LeafIcon({
+            iconUrl: 'stop-icon.svg'
+        });
+        return {
+            icon: stopIcon
+        };
     };
 
 
@@ -59,20 +80,13 @@ export default class LeafletMap extends React.Component<Props, State> {
         }
     };
 
-    getOeVKGAREStyle = (feature: any, layer: any) => {
-        return {
-            stroke: true,
-            fill: false,
-            color: config.colorsARE[feature.properties.KLASSE]
-        };
-    };
 
     render() {
         const position = [this.state.lat, this.state.lng];
         const {oeVGK18Rating} = this.props;
         return (
             <Map center={position} zoom={this.state.zoom} maxZoom={17} minZoom={8} zoomControl={false}
-                onMoveend={this.updateHash}>
+                 onMoveend={this.updateHash}>
                 <TileLayer
                     attribution={'Elevation model &copy; Bundesamt für Landestopografie ' +
                     '<a href="https://www.swisstopo.admin.ch/">Swisstopo</a> | ' +
@@ -80,17 +94,30 @@ export default class LeafletMap extends React.Component<Props, State> {
                     url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
                 />
                 <Pane name={'oevgk18Pane'}>
-
                     {this.props.showOeVGK18 && this.props.oeVGK18Rating &&
-                    <VectorgridLayer layerKey={oeVGK18Rating.tile_name}
-                                     url={"/data/" + oeVGK18Rating.tile_name + "/{z}/{x}/{y}.pbf"}
-                                     opacity={config.oeVGK18Opacity} featureStyle={this.getOeVGK18Style}/>
+                    <VectorgridLayer
+                        layerKey={oeVGK18Rating.tile_name}
+                        url={"/data/" + oeVGK18Rating.tile_name + "/{z}/{x}/{y}.pbf"}
+                        opacity={config.oeVGK18Opacity}
+                        zIndex={2}
+                        featureStyle={this.getOeVGK18Style}/>
                     }
                 </Pane>
                 <Pane name={'oevgkAREPane'}>
-                    {this.props.showOeVGKARE && this.props.oeVKGAREData.hasOwnProperty('type') &&
-                    <GeoJSON data={this.props.oeVKGAREData} style={this.getOeVKGAREStyle}/>
+                    {this.props.showOeVGKARE &&
+                    <VectorgridLayer
+                        layerKey={'oevgkare'}
+                        url={"/data/Oev_Gueteklassen_ARE/{z}/{x}/{y}.pbf"}
+                        zIndex={3}
+                        featureStyle={this.getOeVKGAREStyle}/>
                     }
+                </Pane>
+                <Pane name={'transportStopsPane'}>
+                    <VectorgridLayer
+                        layerKey={'transport_stops'}
+                        url={"/data/transport_stops/{z}/{x}/{y}.pbf"}
+                        zIndex={4}
+                        featureStyle={this.getTransportStopsStyle}/>
                 </Pane>
             </Map>
         );

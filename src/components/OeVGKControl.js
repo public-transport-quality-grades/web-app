@@ -1,6 +1,6 @@
 //@flow
 import React, {Component} from 'react';
-import {Accordion, Icon, Checkbox, Select, Loader} from 'semantic-ui-react';
+import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
 import * as config from '../config.js'
 import LeafletMap from './LeafletMap';
 import RatingInfoPanel from './RatingInfoPanel';
@@ -29,42 +29,29 @@ export type Rating = {
     tile_name: string
 }
 
-
 type State = {
     oeVGK18Enabled: boolean,
     oeVGKAREEnabled: boolean,
-    oeVGKARELoading: boolean,
     dayOptions: DayOption[],
     timeOptions: TimeOption[],
     availableRatings: Rating[],
     selectedDay: string,
-    selectedRatingId: number,
-    mapDataOeVGKARE: {}
+    selectedRatingId: number
 };
-
 
 class OevGKControl extends Component<{}, State> {
     state = {
         oeVGK18Enabled: true,
-        oeVGKARELoading: false,
         oeVGKAREEnabled: false,
         dayOptions: [],
         timeOptions: [],
         availableRatings: [],
         selectedDay: "",
-        selectedRatingId: -1,
-        mapDataOeVGKARE: {}
+        selectedRatingId: -1
     };
 
     componentDidMount = () => {
         this.updateDayOptions().then(this.updateTimeOptions);
-    };
-
-    componentDidUpdate = (prevProps: {}, prevState: State) => {
-        if (!prevState.oeVGKAREEnabled && this.state.oeVGKAREEnabled) {
-            this.setState({oeVGKARELoading: true});
-            this.loadOeVGKAREMapData();
-        }
     };
 
     updateDayOptions = (): Promise<string> => {
@@ -112,24 +99,15 @@ class OevGKControl extends Component<{}, State> {
             })
     };
 
-    loadOeVGKAREMapData = () => {
-        fetch(`/api/oevgkARE`)
-            .then(this.getJsonResponse)
-            .then((data: {}) => {
-                this.setState({mapDataOeVGKARE: data, oeVGKARELoading: false});
-            });
-    };
-
     handleOeVGK18Toggle = () => {
         this.setState({
-            oeVGK18Enabled: !this.state.oeVGK18Enabled,
+            oeVGK18Enabled: !this.state.oeVGK18Enabled
         });
     };
 
     handleOeVGK93Toggle = () => {
         this.setState({
-            oeVGKAREEnabled: !this.state.oeVGKAREEnabled,
-            oeVGKARELoading: false
+            oeVGKAREEnabled: !this.state.oeVGKAREEnabled
         });
     };
 
@@ -149,15 +127,14 @@ class OevGKControl extends Component<{}, State> {
     };
 
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, mapDataOeVGKARE,
-            availableRatings, selectedRatingId} = this.state;
+        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
 
         return (
             <div>
                 <Accordion styled id="control">
-                    <Accordion.Title active={oeVGK18Enabled} onClick={this.handleOeVGK18Toggle}>
+                    <Accordion.Title active={oeVGK18Enabled}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle
                               checked={oeVGK18Enabled}
@@ -187,21 +164,21 @@ class OevGKControl extends Component<{}, State> {
                         }
                     </Accordion.Content>
 
-                    <Accordion.Title active={oeVGKAREEnabled} onClick={this.handleOeVGK93Toggle}>
+                    <Accordion.Title active={oeVGKAREEnabled}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle checked={oeVGKAREEnabled}
                                   className="accordionTitle"
                                   label="ÖV-Güteklassen ARE"
                                   onClick={this.handleOeVGK93Toggle}/>
-                        <Loader inline active={this.state.oeVGKARELoading} />
                     </Accordion.Title>
                     <Accordion.Content active={oeVGKAREEnabled}>
                         <ColorLegend colors={config.colorsARE}/>
                     </Accordion.Content>
                 </Accordion>
                 <LeafletMap 
-                    oeVGK18Rating={selectedRating} oeVKGAREData={mapDataOeVGKARE}
-                    showOeVGK18={oeVGK18Enabled} showOeVGKARE={oeVGKAREEnabled} />
+                    oeVGK18Rating={selectedRating}
+                    showOeVGK18={oeVGK18Enabled} 
+                    showOeVGKARE={oeVGKAREEnabled} />
             </div>
         );
     }
