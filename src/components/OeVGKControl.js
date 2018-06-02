@@ -132,7 +132,7 @@ class OevGKControl extends Component<{}, State> {
         const selectedRating = availableRatings[selectedRatingIndex];
 
         return (
-            <div>
+            <main>
                 <Accordion styled id="control">
                     <Accordion.Title active={oeVGK18Enabled}>
                         <Icon name='dropdown'/>
@@ -179,7 +179,7 @@ class OevGKControl extends Component<{}, State> {
                     oeVGK18Rating={selectedRating}
                     showOeVGK18={oeVGK18Enabled} 
                     showOeVGKARE={oeVGKAREEnabled} />
-            </div>
+            </main>
         );
     }
 }
