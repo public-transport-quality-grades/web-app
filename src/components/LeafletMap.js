@@ -107,7 +107,7 @@ export default class LeafletMap extends React.Component<Props, State> {
                     {this.props.showOeVGKARE &&
                     <VectorgridLayer
                         layerKey={'oevgkare'}
-                        url={"/data/oevgkare/{z}/{x}/{y}.pbf"}
+                        url={"/data/Oev_Gueteklassen_ARE/{z}/{x}/{y}.pbf"}
                         zIndex={3}
                         featureStyle={this.getOeVKGAREStyle}/>
                     }
