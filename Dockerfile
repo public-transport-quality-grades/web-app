@@ -8,4 +8,4 @@ FROM node:9-alpine
 RUN npm install -g serve
 COPY --from=0 /app/build /app
 WORKDIR /app 
-CMD ["serve", "-p 8080", "-s", "."]
+CMD ["serve", "-l", "8080", "."]
