@@ -5,6 +5,7 @@ import L from 'leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
 import VectorgridLayer from './VectorgridLayer';
+import GeoSearch from './GeoSearch';
 
 require('leaflet/dist/leaflet.css');
 
@@ -119,6 +120,7 @@ export default class LeafletMap extends React.Component<Props, State> {
                         zIndex={4}
                         featureStyle={this.getTransportStopsStyle}/>
                 </Pane>
+                <GeoSearch/>
             </Map>
         );
     }
