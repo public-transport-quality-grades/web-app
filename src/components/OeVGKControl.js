@@ -1,6 +1,6 @@
 //@flow
 import React, {Component} from 'react';
-import {Accordion, Icon, Checkbox, Select} from 'semantic-ui-react';
+import {Accordion, Checkbox, Icon, Select} from 'semantic-ui-react';
 import * as config from '../config.js'
 import LeafletMap from './LeafletMap';
 import RatingInfoPanel from './RatingInfoPanel';
@@ -133,11 +133,11 @@ class OevGKControl extends Component<{}, State> {
     };
 
     handleOeVGK18AccordionClick = () => {
-        this.setState({oeVGK18AccordionOpen: !this.state.oeVGK18AccordionOpen}) 
+        this.setState({oeVGK18AccordionOpen: !this.state.oeVGK18AccordionOpen})
     };
 
     handleOeVGKAREAccordionClick = () => {
-        this.setState({oeVGKAREAccordionOpen: !this.state.oeVGKAREAccordionOpen}) 
+        this.setState({oeVGKAREAccordionOpen: !this.state.oeVGKAREAccordionOpen})
         console.log(this.state.oeVGKAREAccordionOpen)
     };
 
@@ -151,9 +151,9 @@ class OevGKControl extends Component<{}, State> {
                     <Accordion.Title onClick={this.handleOeVGK18AccordionClick} active={oeVGK18AccordionOpen}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle
-                              checked={oeVGK18Enabled}
-                              className="accordionTitle"
-                              onClick={this.handleOeVGK18Toggle}/>
+                                  checked={oeVGK18Enabled}
+                                  className="accordionTitle"
+                                  onClick={this.handleOeVGK18Toggle}/>
                         <label>ÖV-Güteklassen 2018</label>
                     </Accordion.Title>
                     <Accordion.Content active={oeVGK18AccordionOpen}>
@@ -170,14 +170,14 @@ class OevGKControl extends Component<{}, State> {
                                     onChange={this.handleTimeSelect}/>
                         </div>
                         {selectedRating &&
-                            <RatingInfoPanel rating={selectedRating} />
+                        <RatingInfoPanel rating={selectedRating}/>
                         }
                         <ColorLegend colors={config.colorsOeVGK18}/>
                     </Accordion.Content>
 
                     <Accordion.Title onClick={this.handleOeVGKAREAccordionClick} active={oeVGKAREAccordionOpen}>
                         <Icon name='dropdown'/>
-                        <Checkbox toggle 
+                        <Checkbox toggle
                                   checked={oeVGKAREEnabled}
                                   className="accordionTitle"
                                   onClick={this.handleOeVGKAREToggle}/>
@@ -187,10 +187,10 @@ class OevGKControl extends Component<{}, State> {
                         <ColorLegend colors={config.colorsARE}/>
                     </Accordion.Content>
                 </Accordion>
-                <LeafletMap 
+                <LeafletMap
                     oeVGK18Rating={selectedRating}
-                    showOeVGK18={oeVGK18Enabled} 
-                    showOeVGKARE={oeVGKAREEnabled} />
+                    showOeVGK18={oeVGK18Enabled}
+                    showOeVGKARE={oeVGKAREEnabled}/>
             </main>
         );
     }

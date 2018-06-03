@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import {Map, TileLayer, Pane} from 'react-leaflet';
+import {Map, Pane, TileLayer} from 'react-leaflet';
 import L from 'leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
