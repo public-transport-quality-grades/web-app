@@ -10,8 +10,19 @@ header {
 
 header h2 {
     display: inline-block;
-    padding-top: 12pt;
+    padding-top: 2pt;
     padding-left: 30pt;
+}
+
+header h2:before {
+    background-image: url('/logo.png');
+    background-size: 40pt 40pt;
+    width: 40pt; 
+    height: 40pt;
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5pt;
 }
 
 header nav {
