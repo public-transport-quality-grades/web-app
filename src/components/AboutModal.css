@@ -1,0 +1,19 @@
+/* https://github.com/Semantic-Org/Semantic-UI-React/issues/2558 */
+.ui.modal {
+    margin-top: 10px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.ui.modal > .close {
+    color: #000000;
+    top: -0.5rem;
+    right: -0.5rem;
+}
+
+.text-icon {
+    position: relative;
+    top: 3pt;
+    left: 4pt;
+    height: 15pt;
+}

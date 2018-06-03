@@ -1,0 +1,20 @@
+header {
+    height: 43pt;
+    position: relative;
+    z-index: 1000;
+    background-color: #ffffff;
+}
+
+header h2 {
+    display: inline-block;
+    padding-top: 12pt;
+    padding-left: 30pt;
+}
+
+header nav {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    padding-right: 30pt;
+    padding-top: 8pt;
+}
