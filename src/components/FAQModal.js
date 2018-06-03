@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import { Button, Header, Modal, Accordion, Icon } from 'semantic-ui-react';
-import * as config from '../config.js'
+import React, {Component} from 'react';
+import {Button, Modal, Accordion, Icon} from 'semantic-ui-react';
+import * as config from '../config.js';
 import ColorLegend from './ColorLegend';
 import './Modal.css';
 
 export default class FAQModal extends Component {
-    state = { activeIndex: 0 }
+    state = {
+        activeIndex: 0 
+    };
 
     handleClick = (e, titleProps) => {
         const { index } = titleProps
         const { activeIndex } = this.state
         const newIndex = activeIndex === index ? -1 : index
-
         this.setState({ activeIndex: newIndex })
     };
 
@@ -48,5 +49,5 @@ export default class FAQModal extends Component {
                 </Modal.Content>
             </Modal>
         )
-    }
+    };
 }
