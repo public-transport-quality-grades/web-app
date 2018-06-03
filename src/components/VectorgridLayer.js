@@ -1,6 +1,7 @@
 // @flow
 
 import L, {GridLayer as LeafletGridLayer} from 'leaflet';
+import {} from 'leaflet.vectorgrid/dist/Leaflet.VectorGrid.bundled.js'
 import PropTypes from 'prop-types';
 import type {GridLayerProps} from 'react-leaflet';
 import {GridLayer} from 'react-leaflet';
