@@ -14,8 +14,8 @@ class RatingInfoPanel extends Component<Props> {
     };
 
     render(){
-        const {due_date, type_of_day, time_interval} = this.props.rating;
-        const {time_description, start, end} = time_interval;
+        const {due_date, time_interval} = this.props.rating;
+        const {start, end} = time_interval;
 
         return (
           <div className="ratingInfoPanel">
