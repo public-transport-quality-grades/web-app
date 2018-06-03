@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 import './ColorLegend.css';
 
 type Props = {
-    colors: {}
+    colors: {},
+    meaning: {}
 };
 
 class ColorLegend extends Component<Props> {
@@ -19,6 +20,9 @@ class ColorLegend extends Component<Props> {
             legendEntries.push(
                 <div className="legendDescription" key={index + grade}>
                     Güteklasse {grade}
+                    {this.props.meaning && this.props.meaning[grade] &&
+                    <span>: {this.props.meaning[grade]}</span>
+                    }
                 </div>
             );
         });

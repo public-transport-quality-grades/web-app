@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Button, Header, Modal} from 'semantic-ui-react'
-import './AboutModal.css';
+import './Modal.css';
 
 export default class AboutModal extends Component {
     render() {
