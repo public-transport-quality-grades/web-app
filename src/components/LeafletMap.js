@@ -50,13 +50,13 @@ export default class LeafletMap extends React.Component<Props, State> {
         window.location.hash = `#${zoom}/${lat.toPrecision(5)}/${lng.toPrecision(5)}`;
     };
 
-    getOeVKGAREStyle = (properties: any, layer: any) => {
+    getOeVKGAREStyle = (properties: any) => {
         return {
             color: config.colorsARE[properties.KLASSE]
         };
     };
 
-    getTransportStopsStyle = (feature: any, layer: any) => {
+    getTransportStopsStyle = () => {
         const LeafIcon = L.Icon.extend({
             options: {
                 iconSize: [12, 12]
@@ -71,7 +71,7 @@ export default class LeafletMap extends React.Component<Props, State> {
     };
 
 
-    getOeVGK18Style = (properties: any, zoom: any) => {
+    getOeVGK18Style = (properties: any) => {
         return {
             stroke: false,
             fill: true,

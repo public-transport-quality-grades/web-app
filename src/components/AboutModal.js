@@ -23,15 +23,15 @@ export default class AboutModal extends Component {
                         </section>
                         <Header>Autoren</Header>
                         <section>
-                            <p>Robin Suter <a href="https://github.com/excape"><img src="github.png" class="text-icon"
+                            <p>Robin Suter <a href="https://github.com/excape"><img src="github.png" className="text-icon"
                                                                                     alt="github-icon"/></a></p>
-                            <p>Jonas Matter <a href="https://github.com/jmatj"><img src="github.png" class="text-icon"
+                            <p>Jonas Matter <a href="https://github.com/jmatj"><img src="github.png" className="text-icon"
                                                                                     alt="github-icon"/></a></p>
                         </section>
                         <Header>Links</Header>
                         <section>
                             <p><a href="https://github.com/public-transport-quality-grades">Github Repositories <img
-                                src="github.png" class="text-icon" alt="github-icon"/></a></p>
+                                src="github.png" className="text-icon" alt="github-icon"/></a></p>
                         </section>
                         <Header>Credits</Header>
                         <section>

@@ -61,7 +61,7 @@ class OevGKControl extends Component<{}, State> {
     updateDayOptions = (): Promise<string> => {
         return fetch('/api/typesOfDays')
             .then(this.getJsonResponse)
-            .then((data: any) => {
+            .then((data: {days: string[]}) => {
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
                 let newDayOptions = data.days.map((day): DayOption => {
@@ -133,12 +133,12 @@ class OevGKControl extends Component<{}, State> {
     };
 
     handleOeVGK18AccordionClick = () => {
-        this.setState({oeVGK18AccordionOpen: !this.state.oeVGK18AccordionOpen})
+        this.setState({oeVGK18AccordionOpen: !this.state.oeVGK18AccordionOpen});
     };
 
     handleOeVGKAREAccordionClick = () => {
-        this.setState({oeVGKAREAccordionOpen: !this.state.oeVGKAREAccordionOpen})
-        console.log(this.state.oeVGKAREAccordionOpen)
+        this.setState({oeVGKAREAccordionOpen: !this.state.oeVGKAREAccordionOpen});
+        console.log(this.state.oeVGKAREAccordionOpen);
     };
 
     render() {
