@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import type {Rating} from './OeVGKControl.js';
+import Moment from 'react-moment';
 import {List} from 'semantic-ui-react';
 
 type Props = {
@@ -13,8 +14,8 @@ class RatingInfoPanel extends Component<Props> {
     };
 
     render(){
-        const {due_date, type_of_day, time_interval} = this.props.rating;
-        const {time_description, start, end} = time_interval;
+        const {due_date, time_interval} = this.props.rating;
+        const {start, end} = time_interval;
 
         return (
           <div className="ratingInfoPanel">
@@ -22,13 +23,7 @@ class RatingInfoPanel extends Component<Props> {
                   <List.Item>
                       <List.Content>
                           <List.Header>Stichtag</List.Header>
-                          <List.Description>{type_of_day}, {this.formatDate(due_date)}</List.Description>
-                      </List.Content>
-                  </List.Item>
-                  <List.Item>
-                      <List.Content>
-                          <List.Header>Zeitintervall</List.Header>
-                          <List.Description>{time_description}, {start} - {end}</List.Description>
+                          <List.Description>{this.formatDate(due_date)}, <Moment format="HH:mm" parse="HH:mm:ss">{start}</Moment> - <Moment format="HH:mm" parse="HH:mm:ss">{end}</Moment> Uhr</List.Description>
                       </List.Content>
                   </List.Item>
               </List>

@@ -12,6 +12,10 @@ div.dropdowns > * {
     margin-bottom: 10pt;
 }
 
-.ui.inline.loader {
-    margin-left: 10pt;
+.accordion .accordionTitle {
+    vertical-align: middle;
+}
+
+.accordion label {
+    padding-left: 10pt;
 }

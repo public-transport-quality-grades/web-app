@@ -31,7 +31,9 @@ export type Rating = {
 
 type State = {
     oeVGK18Enabled: boolean,
+    oeVGK18AccordionOpen: boolean,
     oeVGKAREEnabled: boolean,
+    oeVGKAREAccordionOpen: boolean,
     dayOptions: DayOption[],
     timeOptions: TimeOption[],
     availableRatings: Rating[],
@@ -42,7 +44,9 @@ type State = {
 class OevGKControl extends Component<{}, State> {
     state = {
         oeVGK18Enabled: true,
+        oeVGK18AccordionOpen: true,
         oeVGKAREEnabled: false,
+        oeVGKAREAccordionOpen: false,
         dayOptions: [],
         timeOptions: [],
         availableRatings: [],
@@ -99,18 +103,6 @@ class OevGKControl extends Component<{}, State> {
             })
     };
 
-    handleOeVGK18Toggle = () => {
-        this.setState({
-            oeVGK18Enabled: !this.state.oeVGK18Enabled
-        });
-    };
-
-    handleOeVGK93Toggle = () => {
-        this.setState({
-            oeVGKAREEnabled: !this.state.oeVGKAREEnabled
-        });
-    };
-
     handleDaySelect = (event: SyntheticMouseEvent<Select>, selectProps: { value: string }) => {
         let {value} = selectProps;
         this.updateTimeOptions(value);
@@ -126,23 +118,45 @@ class OevGKControl extends Component<{}, State> {
         return response.json();
     };
 
+    handleOeVGK18Toggle = (e) => {
+        this.setState({
+            oeVGK18Enabled: !this.state.oeVGK18Enabled
+        });
+        e.stopPropagation();
+    };
+
+    handleOeVGKAREToggle = (e) => {
+        this.setState({
+            oeVGKAREEnabled: !this.state.oeVGKAREEnabled
+        });
+        e.stopPropagation();
+    };
+
+    handleOeVGK18AccordionClick = () => {
+        this.setState({oeVGK18AccordionOpen: !this.state.oeVGK18AccordionOpen}) 
+    };
+
+    handleOeVGKAREAccordionClick = () => {
+        this.setState({oeVGKAREAccordionOpen: !this.state.oeVGKAREAccordionOpen}) 
+        console.log(this.state.oeVGKAREAccordionOpen)
+    };
+
     render() {
-        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId} = this.state;
+        const {oeVGK18Enabled, oeVGKAREEnabled, availableRatings, selectedRatingId, oeVGK18AccordionOpen, oeVGKAREAccordionOpen} = this.state;
         const selectedRatingIndex = availableRatings.findIndex((rating: Rating) => rating.id === selectedRatingId);
         const selectedRating = availableRatings[selectedRatingIndex];
-
         return (
             <main>
-                <Accordion styled id="control">
-                    <Accordion.Title active={oeVGK18Enabled}>
+                <Accordion styled id="control" exclusive={false}>
+                    <Accordion.Title onClick={this.handleOeVGK18AccordionClick} active={oeVGK18AccordionOpen}>
                         <Icon name='dropdown'/>
                         <Checkbox toggle
                               checked={oeVGK18Enabled}
                               className="accordionTitle"
-                              label="ÖV-Güteklassen 2018"
                               onClick={this.handleOeVGK18Toggle}/>
+                        <label>ÖV-Güteklassen 2018</label>
                     </Accordion.Title>
-                    <Accordion.Content active={oeVGK18Enabled}>
+                    <Accordion.Content active={oeVGK18AccordionOpen}>
                         <div className="dropdowns">
                             <Select fluid
                                     placeholder='Tag auswählen'
@@ -158,20 +172,18 @@ class OevGKControl extends Component<{}, State> {
                         {selectedRating &&
                             <RatingInfoPanel rating={selectedRating} />
                         }
-
-                        {oeVGK18Enabled &&
-                            <ColorLegend colors={config.colorsOeVGK18}/>
-                        }
+                        <ColorLegend colors={config.colorsOeVGK18}/>
                     </Accordion.Content>
 
-                    <Accordion.Title active={oeVGKAREEnabled}>
+                    <Accordion.Title onClick={this.handleOeVGKAREAccordionClick} active={oeVGKAREAccordionOpen}>
                         <Icon name='dropdown'/>
-                        <Checkbox toggle checked={oeVGKAREEnabled}
+                        <Checkbox toggle 
+                                  checked={oeVGKAREEnabled}
                                   className="accordionTitle"
-                                  label="ÖV-Güteklassen ARE"
-                                  onClick={this.handleOeVGK93Toggle}/>
+                                  onClick={this.handleOeVGKAREToggle}/>
+                        <label>ÖV-Güteklassen ARE</label>
                     </Accordion.Title>
-                    <Accordion.Content active={oeVGKAREEnabled}>
+                    <Accordion.Content active={oeVGKAREAccordionOpen}>
                         <ColorLegend colors={config.colorsARE}/>
                     </Accordion.Content>
                 </Accordion>
