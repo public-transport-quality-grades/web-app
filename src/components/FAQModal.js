@@ -41,7 +41,7 @@ export default class FAQModal extends Component {
                             </Accordion.Title>
                             <Accordion.Content active={activeIndex === 1}>
                                 <p>
-                                    Das gesamte Projekt ist frei verfügbar auf <a href="https://github.com/public-transport-quality-grades">Github.</a> Die Arbeit ist im Rahmen einer Bachelorarbeit entstanden. Diese ist kann <a href="https://github.com/public-transport-quality-grades/thesis/releases/download/v1.0/index.pdf">unter</a> eingesehen werden.
+                                    Das gesamte Projekt ist frei verfügbar auf <a href="https://github.com/public-transport-quality-grades">Github.</a> Die Arbeit ist im Rahmen einer Bachelorarbeit entstanden. Diese kann auf <a href="https://github.com/public-transport-quality-grades/thesis/releases/download/v1.0/index.pdf">Github</a> eingesehen werden.
                                 </p>
                             </Accordion.Content>
                         </Accordion>
