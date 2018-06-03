@@ -23,9 +23,11 @@ export default class AboutModal extends Component {
                         </section>
                         <Header>Autoren</Header>
                         <section>
-                            <p>Robin Suter <a href="https://github.com/excape"><img src="github.png" className="text-icon"
+                            <p>Robin Suter <a href="https://github.com/excape"><img src="github.png"
+                                                                                    className="text-icon"
                                                                                     alt="github-icon"/></a></p>
-                            <p>Jonas Matter <a href="https://github.com/jmatj"><img src="github.png" className="text-icon"
+                            <p>Jonas Matter <a href="https://github.com/jmatj"><img src="github.png"
+                                                                                    className="text-icon"
                                                                                     alt="github-icon"/></a></p>
                         </section>
                         <Header>Links</Header>
@@ -43,10 +45,12 @@ export default class AboutModal extends Component {
                             <p>Fahrplandaten &copy; <a href="http://www.fahrplanfelder.ch">Offizielles Kursbuch</a></p>
                             <p>&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a></p>
                             <p>Basiskarte &copy; <a href="https://carto.com">Carto</a></p>
+                            <p>Icon &copy; <a href="https://www.iconfinder.com/arunxthomas">Arun Thomas</a></p>
                         </section>
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
         )
     }
+
 }
