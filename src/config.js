@@ -7,6 +7,15 @@ export const colorsOeVGK18 = {
     "F": "#DEF325"
 };
 
+export const meaningOeVGK18 = {
+    "A": "Sehr gute Erschliessung",
+    "B": "Gute Erschliessung",
+    "C": "Erschliessung",
+    "D": "Durchschnittliche Erschliessung",
+    "E": "Basiserschliessung",
+    "F": "Grundangebot"
+};
+
 export const oeVGK18Opacity = 0.6;
 
 export const colorsARE = {
