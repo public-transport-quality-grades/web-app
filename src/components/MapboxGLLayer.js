@@ -17,5 +17,5 @@ export default class MapboxGLLayer extends GridLayer<MapboxGLLayer, GridLayerPro
 
     createLeafletElement(props: Object): Object {
         return L.mapboxGL(props)
-    }
+    };
 }
