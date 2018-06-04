@@ -1,3 +1,5 @@
+export const mapboxStyleUrl = 'https://maps.tilehosting.com/c/6e56c244-4f46-469d-840d-28cfb234f5a9/styles/positron/style.json?key=HEhIieMgsLPA7PKcbTfx';
+
 export const colorsOeVGK18 = {
     "A": "#700038",
     "B": "#BC42FF",

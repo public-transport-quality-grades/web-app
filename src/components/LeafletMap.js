@@ -1,10 +1,11 @@
 //@flow
 import React from 'react';
-import {Map, Pane, TileLayer} from 'react-leaflet';
+import {Map, Pane} from 'react-leaflet';
 import L from 'leaflet';
 import * as config from '../config.js';
 import './LeafletMap.css';
 import VectorgridLayer from './VectorgridLayer';
+import MapboxGLLayer from './MapboxGLLayer';
 import GeoSearch from './GeoSearch';
 
 require('leaflet/dist/leaflet.css');
@@ -88,11 +89,13 @@ export default class LeafletMap extends React.Component<Props, State> {
         return (
             <Map center={position} zoom={this.state.zoom} maxZoom={17} minZoom={8} zoomControl={false}
                  onMoveend={this.updateHash}>
-                <TileLayer
-                    attribution={'Elevation model &copy; Bundesamt für Landestopografie ' +
+                <MapboxGLLayer
+                    attribution={'<a href="http://www.openmaptiles.org/">&copy; OpenMapTiles</a> | ' +
+                        'Elevation model &copy; Bundesamt für Landestopografie ' +
                     '<a href="https://www.swisstopo.admin.ch/">Swisstopo</a> | ' +
                     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
-                    url='https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
+                    accessToken='not-required'
+                    style={config.mapboxStyleUrl}
                 />
                 <Pane name={'oevgk18Pane'}>
                     {this.props.showOeVGK18 && this.props.oeVGK18Rating &&
