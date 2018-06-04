@@ -23,11 +23,11 @@ class RatingInfoPanel extends Component<Props> {
                     <List.Item>
                         <List.Content>
                             <List.Header>Stichtag</List.Header>
-                            <List.Description>{this.formatDate(due_date)},
-                                <Moment format="HH:mm"
-                                        parse="HH:mm:ss">{start}</Moment> -
-                                <Moment
-                                    format="HH:mm" parse="HH:mm:ss">{end}</Moment> Uhr</List.Description>
+                            <List.Description>
+                                {this.formatDate(due_date)},&nbsp;
+                                <Moment format="HH:mm" parse="HH:mm:ss">{start}</Moment>&nbsp;-&nbsp;
+                                <Moment format="HH:mm" parse="HH:mm:ss">{end}</Moment>&nbsp;Uhr
+                            </List.Description>
                         </List.Content>
                     </List.Item>
                 </List>
