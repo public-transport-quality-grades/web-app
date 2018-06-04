@@ -44,7 +44,7 @@ export default class AboutModal extends Component {
                                 für Raumentwicklung</a></p>
                             <p>Fahrplandaten &copy; <a href="http://www.fahrplanfelder.ch">Offizielles Kursbuch</a></p>
                             <p>&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a></p>
-                            <p>Basiskarte &copy; <a href="https://carto.com">Carto</a></p>
+                            <p>Basiskarte &copy; <a href="http://www.openmaptiles.org/">OpenMapTiles</a></p>
                             <p>Icon &copy; <a href="https://www.iconfinder.com/arunxthomas">Arun Thomas</a></p>
                         </section>
                     </Modal.Description>
