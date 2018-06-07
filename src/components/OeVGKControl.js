@@ -118,14 +118,14 @@ class OevGKControl extends Component<{}, State> {
         return response.json();
     };
 
-    handleOeVGK18Toggle = (e) => {
+    handleOeVGK18Toggle = (e: SyntheticMouseEvent<Checkbox>) => {
         this.setState({
             oeVGK18Enabled: !this.state.oeVGK18Enabled
         });
         e.stopPropagation();
     };
 
-    handleOeVGKAREToggle = (e) => {
+    handleOeVGKAREToggle = (e: SyntheticMouseEvent<Checkbox>) => {
         this.setState({
             oeVGKAREEnabled: !this.state.oeVGKAREEnabled
         });
