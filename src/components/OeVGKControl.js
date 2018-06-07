@@ -64,6 +64,7 @@ class OevGKControl extends Component<{}, State> {
             .then((data: {days: string[]}) => {
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
+                data.days.sort().reverse(); // sort to have "Working Day" as first element
                 let newDayOptions = data.days.map((day): DayOption => {
                     return {text: day, value: day};
                 });
