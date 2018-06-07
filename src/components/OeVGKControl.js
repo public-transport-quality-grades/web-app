@@ -64,6 +64,7 @@ class OevGKControl extends Component<{}, State> {
             .then((data: {days: string[]}) => {
                 if (!data.days)
                     return Promise.reject("key 'days' not in availableDaysResponse");
+                data.days.sort().reverse(); // sort to have "Working Day" as first element
                 let newDayOptions = data.days.map((day): DayOption => {
                     return {text: day, value: day};
                 });
@@ -118,14 +119,14 @@ class OevGKControl extends Component<{}, State> {
         return response.json();
     };
 
-    handleOeVGK18Toggle = (e) => {
+    handleOeVGK18Toggle = (e: SyntheticMouseEvent<Checkbox>) => {
         this.setState({
             oeVGK18Enabled: !this.state.oeVGK18Enabled
         });
         e.stopPropagation();
     };
 
-    handleOeVGKAREToggle = (e) => {
+    handleOeVGKAREToggle = (e: SyntheticMouseEvent<Checkbox>) => {
         this.setState({
             oeVGKAREEnabled: !this.state.oeVGKAREEnabled
         });

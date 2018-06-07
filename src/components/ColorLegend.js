@@ -4,7 +4,7 @@ import './ColorLegend.css';
 
 type Props = {
     colors: {},
-    meaning: {}
+    meaning?: {}
 };
 
 class ColorLegend extends Component<Props> {
