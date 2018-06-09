@@ -67,7 +67,7 @@ export default class LeafletMap extends React.Component<Props, State> {
     getTransportStopsStyle = () => {
         const LeafIcon = L.Icon.extend({
             options: {
-                iconSize: [12, 12]
+                iconSize: [10, 10]
             }
         });
         const stopIcon = new LeafIcon({
