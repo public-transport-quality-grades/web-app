@@ -173,7 +173,7 @@ class OevGKControl extends Component<{}, State> {
                         {selectedRating &&
                         <RatingInfoPanel rating={selectedRating}/>
                         }
-                        <ColorLegend colors={config.colorsOeVGK18}/>
+                        <ColorLegend colors={config.colorsOeVGK18} fill={true}/>
                     </Accordion.Content>
 
                     <Accordion.Title onClick={this.handleOeVGKAREAccordionClick} active={oeVGKAREAccordionOpen}>
@@ -185,7 +185,7 @@ class OevGKControl extends Component<{}, State> {
                         <label>ÖV-Güteklassen ARE</label>
                     </Accordion.Title>
                     <Accordion.Content active={oeVGKAREAccordionOpen}>
-                        <ColorLegend colors={config.colorsARE}/>
+                        <ColorLegend colors={config.colorsARE} fill={false}/>
                     </Accordion.Content>
                 </Accordion>
                 <LeafletMap

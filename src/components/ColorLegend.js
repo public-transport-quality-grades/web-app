@@ -4,6 +4,7 @@ import './ColorLegend.css';
 
 type Props = {
     colors: {},
+    fill: boolean,
     meaning?: {}
 };
 
@@ -14,9 +15,16 @@ class ColorLegend extends Component<Props> {
         Object.keys(this.props.colors).forEach((grade, index) => {
             const color = this.props.colors[grade];
             legendEntries.push(
-                <div className="colorPane" title={color} key={index + color} style={{
-                    backgroundColor: color
-                }}/>);
+                <div className="colorPane"
+                     title={color} key={index + color}
+                     style={this.props.fill ? {
+                             backgroundColor: color
+                         } :
+                         {
+                             border: '3px solid',
+                             borderColor: color
+                         }
+                     }/>);
             legendEntries.push(
                 <div className="legendDescription" key={index + grade}>
                     Güteklasse {grade}
