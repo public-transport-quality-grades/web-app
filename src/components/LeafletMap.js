@@ -34,10 +34,16 @@ export default class LeafletMap extends React.Component<Props, State> {
     };
 
     componentDidMount = () => {
-        this.readHashParameters(window.location.hash);
+        this.readHashParameters();
+        window.addEventListener("hashchange", this.readHashParameters, false);
     };
 
-    readHashParameters = (hash: string) => {
+    componentWillUnmount() {
+        window.removeEventListener("hashchange", this.readHashParameters, false);
+    }
+
+    readHashParameters = () => {
+        const hash = window.location.hash;
         if (!!hash) {
             let zoom, lat, lng;
             [zoom, lat, lng] = hash.replace('#', '').split('/');
