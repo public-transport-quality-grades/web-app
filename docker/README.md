@@ -8,6 +8,7 @@ This manual describes how to run the complete web application for public transpo
 * [Docker Compose](https://docs.docker.com/compose/install/)
 * ogr2ogr from [GDAL](http://www.gdal.org/ogr2ogr.html)
 * Public transport quality grades as a set of GeoJSON files generated with [oevgk18-generator](https://github.com/public-transport-quality-grades/oevgk18-generator)
+    * If you want to use existing data, see the release page of [oevgk18-generator](https://github.com/public-transport-quality-grades/oevgk18-generator/releases) to download a precalculated set of public transport quality gradings.
 
 ## Preparation
 
@@ -26,7 +27,9 @@ Oev_Gueteklassen_ARE.geojson Oev_Gueteklassen_ARE.shp -lco RFC7946=YES
 
 ## Setup
 
-1) Copy the result data from the [oevgk18-generator](https://github.com/public-transport-quality-grades/oevgk18-generator) to `generator-results/`. The directory should look something like this:
+1) Copy the result data from the [oevgk18-generator](https://github.com/public-transport-quality-grades/oevgk18-generator) to `generator-results/`.
+
+The directory should look something like this:
 
 ```bash
 $ ll generator-results 
